@@ -1,0 +1,132 @@
+import React from "react" import Courses from "./Courses"
+
+export default function App() { return ( <main className="min-h-screen bg-background text-foreground p-6"> <header className="text-center mb-10"> <h1 className="text-5xl font-bold mb-3">TechWorld Cursos</h1> <p className="text-lg text-muted-foreground max-w-2xl mx-auto"> Aprenda programação, desenvolvimento de jogos e tecnologias modernas </p> </header> <Courses /> </main> ) }
+
+// --- Componente completo fornecido pelo usuário ---
+
+"use client"
+
+import { useState } from "react" import { Clock, BarChart3, ArrowRight, X } from "lucide-react"
+
+const coursesData = [ { id: "javascript-fundamentos", title: "Fundamentos de JavaScript", description: "Aprenda os conceitos essenciais de programação com JavaScript moderno", level: "Iniciante", duration: "4 semanas", students: "2.3K", color: "from-primary", totalWeeks: 4, }, { id: "react-zero", title: "React do Zero", description: "Domine a biblioteca mais popular para criar interfaces web interativas", level: "Iniciante", duration: "5 semanas", students: "1.8K", color: "from-secondary", totalWeeks: 5, }, { id: "gamedev-unity", title: "Game Dev com Unity", description: "Crie jogos 3D profissionais com a engine mais usada no mercado", level: "Intermediário", duration: "8 semanas", students: "1.2K", color: "from-accent", totalWeeks: 8, }, { id: "nextjs-avancado", title: "Next.js Avançado", description: "Construa aplicações full-stack escaláveis com Next.js 14", level: "Avançado", duration: "6 semanas", students: "890", color: "from-primary", totalWeeks: 6, }, { id: "godot-essentials", title: "Godot Engine Essentials", description: "Crie jogos 2D com a engine open-source mais flexível", level: "Intermediário", duration: "5 semanas", students: "650", color: "from-secondary", totalWeeks: 5, }, { id: "web3-smartcontracts", title: "Web3 & Smart Contracts", description: "Desenvolva aplicações descentralizadas e contratos inteligentes", level: "Avançado", duration: "7 semanas", students: "520", color: "from-accent", totalWeeks: 7, }, ]
+
+const courseDetails = { "javascript-fundamentos": { fullDescription: "Aprenda JavaScript do zero! Este curso cobre variáveis, tipos de dados, funções, loops, objetos e muito mais.", whatYouLearn: [ "Variáveis e tipos de dados", "Funções e escopo", "Objetos e arrays", "DOM manipulation", "ES6+ features", ], weeks: ["Introdução e Variáveis", "Funções e Controle de Fluxo", "Objetos e Arrays", "DOM e Eventos"], }, "react-zero": { fullDescription: "Comece sua jornada com React! Aprenda componentes, hooks e gerenciamento de estado.", whatYouLearn: [ "Componentes React", "Hooks (useState, useEffect)", "Props e composição", "Gerenciamento de estado", "React Router", ], weeks: ["Introdução ao React", "Componentes e Props", "Hooks e Estado", "Roteamento", "Projeto Final"], }, "gamedev-unity": { fullDescription: "Crie seus próprios jogos 3D com Unity! Aprenda C#, física, animação e muito mais.", whatYouLearn: ["Unity Editor e C#", "Física e Colisões", "Animações", "Audio e Partículas", "Otimização"], weeks: [ "Setup e Primeiros Passos", "Movimento e Controles", "Física e Colisões", "Animações", "UI e Menus", "Audio e Efeitos", "Polimento", "Publicação", ], }, "nextjs-avancado": { fullDescription: "Domine Next.js 14! Aprenda SSR, SSG, API Routes e deployment.", whatYouLearn: ["App Router", "Server Components", "API Routes", "Autenticação", "Deployment"], weeks: ["Next.js 14 Avançado", "Server Components", "API Routes", "Autenticação", "Banco de Dados", "Deployment"], }, "godot-essentials": { fullDescription: "Aprenda Godot, a engine open-source mais flexível para jogos 2D.", whatYouLearn: ["Godot Editor", "GDScript", "Cenas e Nós", "Física 2D", "Publicação"], weeks: ["Primeiros Passos", "Movimento e Controles", "Física 2D", "Sistemas de Pontos", "Publicação"], }, "web3-smartcontracts": { fullDescription: "Entre no mundo das aplicações descentralizadas! Aprenda Solidity e Web3.", whatYouLearn: ["Blockchain Basics", "Solidity", "Smart Contracts", "Web3.js", "DApps"], weeks: [ "Blockchain Basics", "Solidity Fundamentals", "Smart Contracts", "Web3 Integration", "DApps", "Segurança", "Deployment", ], }, }
+
+export function Courses() { const [selectedCourse, setSelectedCourse] = useState(null)
+
+const handleStartCourse = (courseId) => { window.location.href = /curso/${courseId}/semana/1 }
+
+return ( <> <section id="cursos" className="py-20 px-4 sm:px-6 lg:px-8"> <div className="max-w-7xl mx-auto"> <div className="text-center mb-16"> <h2 className="text-4xl font-bold mb-4">Cursos em Destaque</h2> <p className="text-xl text-muted-foreground max-w-2xl mx-auto"> Escolha entre nossos cursos cuidadosamente estruturados por especialistas </p> </div>
+
+<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {coursesData.map((course) => (
+          <div
+            key={course.id}
+            onClick={() => setSelectedCourse(course)}
+            className="group bg-card rounded-xl border border-border hover:border-primary/50 overflow-hidden transition cursor-pointer h-full hover:shadow-lg"
+          >
+            <div
+              className={`h-32 bg-gradient-to-br ${course.color} to-transparent opacity-20 group-hover:opacity-30 transition`}
+            ></div>
+
+            <div className="p-6 space-y-4">
+              <div className="space-y-2">
+                <h3 className="font-semibold text-lg group-hover:text-primary transition">{course.title}</h3>
+                <p className="text-sm text-muted-foreground">{course.description}</p>
+              </div>
+
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span className="px-2 py-1 bg-muted rounded text-xs font-medium">{course.level}</span>
+                <span>{course.students} alunos</span>
+              </div>
+
+              <div className="flex items-center gap-4 pt-4 border-t border-border text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <Clock size={16} />
+                  {course.duration}
+                </div>
+                <div className="flex items-center gap-1">
+                  <BarChart3 size={16} />
+                  {course.level}
+                </div>
+              </div>
+
+              <button className="w-full mt-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30 rounded-lg font-medium text-primary hover:from-primary/20 hover:to-secondary/20 transition">
+                Ver Curso
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {selectedCourse && (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div className="bg-background rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6 border-b border-border flex justify-between items-start">
+          <h2 className="text-2xl font-bold">{selectedCourse.title}</h2>
+          <button
+            onClick={() => setSelectedCourse(null)}
+            className="text-muted-foreground hover:text-foreground transition"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="p-6 space-y-6">
+          <div>
+            <h3 className="font-semibold mb-2">Sobre o Curso</h3>
+            <p className="text-muted-foreground">{courseDetails[selectedCourse.id]?.fullDescription}</p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-3">O que você vai aprender</h3>
+            <ul className="grid grid-cols-2 gap-2">
+              {courseDetails[selectedCourse.id]?.whatYouLearn.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <span className="text-primary mt-1">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-3">
+              Estrutura do Curso ({selectedCourse.totalWeeks} semanas)
+            </h3>
+            <ul className="space-y-2">
+              {courseDetails[selectedCourse.id]?.weeks.map((week, idx) => (
+                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs">
+                    {idx + 1}
+                  </span>
+                  {week}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <button
+              onClick={() => setSelectedCourse(null)}
+              className="flex-1 py-2 border border-border rounded-lg font-medium hover:bg-muted transition"
+            >
+              Voltar aos Cursos
+            </button>
+            <button
+              onClick={() => handleStartCourse(selectedCourse.id)}
+              className="flex-1 py-2 bg-gradient-to-r from-primary to-secondary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition flex items-center justify-center gap-2"
+            >
+              Começar Agora
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</>
+
+) }
